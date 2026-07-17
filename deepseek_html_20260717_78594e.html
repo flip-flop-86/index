@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جعبه ابزار هوش مصنوعی | ابزارهای رایگان AI</title>
+    <meta name="description" content="مجموعه ابزارهای رایگان هوش مصنوعی - چت بات، تولید محتوا، تحلیل احساسات و خلاصه‌سازی متن">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- هدر -->
+    <header>
+        <div class="header-content">
+            <h1>🤖 جعبه ابزار هوش مصنوعی</h1>
+            <p>ابزارهای رایگان و کاربردی با قدرت هوش مصنوعی</p>
+        </div>
+    </header>
+
+    <!-- تب‌ها -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('chat')">💬 چت بات</button>
+        <button class="tab-btn" onclick="switchTab('content')">✍️ تولید محتوا</button>
+        <button class="tab-btn" onclick="switchTab('sentiment')">😊 تحلیل احساسات</button>
+        <button class="tab-btn" onclick="switchTab('summary')">📝 خلاصه‌سازی</button>
+    </div>
+
+    <main class="container">
+        <!-- تب چت بات -->
+        <div id="chat-tab" class="tab-content active">
+            <div class="card">
+                <h2>💬 دستیار هوشمند</h2>
+                <p>سوالت رو بپرس تا کمکت کنم!</p>
+                <div class="chat-box" id="chatBox">
+                    <div class="message bot">
+                        سلام! من دستیار هوش مصنوعی هستم. چطور می‌تونم کمکت کنم؟
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="پیامت رو بنویس..."
+                        onkeypress="if(event.key==='Enter') chatWithAI()"
+                    >
+                    <button onclick="chatWithAI()" class="btn-primary">
+                        <span>ارسال</span>
+                        <span class="loading hidden" id="chatLoader">⏳</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تب تولید محتوا -->
+        <div id="content-tab" class="tab-content">
+            <div class="card">
+                <h2>✍️ تولید محتوای خلاقانه</h2>
+                <p>موضوع رو وارد کن تا برات محتوا بنویسم</p>
+                
+                <div class="form-group">
+                    <label>موضوع:</label>
+                    <input type="text" id="contentTopic" placeholder="مثلاً: مزایای ورزش صبحگاهی">
+                </div>
+                
+                <div class="form-group">
+                    <label>نوع محتوا:</label>
+                    <select id="contentType">
+                        <option value="blog">پست وبلاگ</option>
+                        <option value="social">پست شبکه اجتماعی</option>
+                        <option value="email">ایمیل تبلیغاتی</option>
+                        <option value="product">توضیحات محصول</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>لحن:</label>
+                    <select id="contentTone">
+                        <option value="formal">رسمی</option>
+                        <option value="friendly">دوستانه</option>
+                        <option value="humorous">طنز</option>
+                        <option value="professional">حرفه‌ای</option>
+                    </select>
+                </div>
+
+                <button onclick="generateContent()" class="btn-primary">
+                    <span>تولید محتوا</span>
+                    <span class="loading hidden" id="contentLoader">⏳</span>
+                </button>
+
+                <div id="generatedContent" class="result-box hidden">
+                    <h3>محتوای تولید شده:</h3>
+                    <div id="contentResult"></div>
+                    <button onclick="copyContent()" class="btn-secondary">📋 کپی محتوا</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تب تحلیل احساسات -->
+        <div id="sentiment-tab" class="tab-content">
+            <div class="card">
+                <h2>😊 تحلیل احساسات متن</h2>
+                <p>متن رو وارد کن تا احساساتش رو تحلیل کنم</p>
+                
+                <textarea 
+                    id="sentimentInput" 
+                    placeholder="متن مورد نظرت رو اینجا بنویس... مثلاً: امروز روز فوق‌العاده‌ای بود!"
+                    rows="5"
+                ></textarea>
+                
+                <button onclick="analyzeSentiment()" class="btn-primary">
+                    <span>تحلیل احساسات</span>
+                    <span class="loading hidden" id="sentimentLoader">⏳</span>
+                </button>
+
+                <div id="sentimentResult" class="result-box hidden">
+                    <div class="sentiment-score">
+                        <div class="sentiment-emoji" id="sentimentEmoji">😐</div>
+                        <div class="sentiment-details">
+                            <p><strong>احساس غالب:</strong> <span id="dominantSentiment">-</span></p>
+                            <div class="sentiment-bar">
+                                <div class="bar-positive" id="positiveBar"></div>
+                                <div class="bar-neutral" id="neutralBar"></div>
+                                <div class="bar-negative" id="negativeBar"></div>
+                            </div>
+                            <div class="sentiment-labels">
+                                <span>😊 مثبت: <strong id="positivePercent">0%</strong></span>
+                                <span>😐 خنثی: <strong id="neutralPercent">0%</strong></span>
+                                <span>😢 منفی: <strong id="negativePercent">0%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- تب خلاصه‌سازی -->
+        <div id="summary-tab" class="tab-content">
+            <div class="card">
+                <h2>📝 خلاصه‌سازی هوشمند</h2>
+                <p>متن طولانی رو وارد کن تا برات خلاصه‌اش کنم</p>
+                
+                <textarea 
+                    id="summaryInput" 
+                    placeholder="متن طولانی خود را اینجا وارد کنید..."
+                    rows="8"
+                ></textarea>
+                
+                <div class="form-group">
+                    <label>طول خلاصه:</label>
+                    <select id="summaryLength">
+                        <option value="short">کوتاه (۲-۳ جمله)</option>
+                        <option value="medium" selected>متوسط (۴-۵ جمله)</option>
+                        <option value="long">بلند (۶-۸ جمله)</option>
+                    </select>
+                </div>
+
+                <button onclick="summarizeText()" class="btn-primary">
+                    <span>خلاصه کن</span>
+                    <span class="loading hidden" id="summaryLoader">⏳</span>
+                </button>
+
+                <div id="summaryResult" class="result-box hidden">
+                    <h3>خلاصه:</h3>
+                    <div id="summaryText"></div>
+                    <button onclick="copySummary()" class="btn-secondary">📋 کپی خلاصه</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- فوتر -->
+    <footer>
+        <p>🚀 ساخته شده با ❤️ و هوش مصنوعی | تمام ابزارها رایگان و متن‌باز</p>
+        <a href="https://github.com/YOUR_USERNAME/ai-tools-site" target="_blank">مشاهده در گیت‌هاب</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
