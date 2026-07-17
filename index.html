@@ -1,121 +1,219 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اولین سایت من</title>
+<title>Galaxy Portal</title>
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Tahoma,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
 }
 
 body{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    text-align:center;
+overflow:hidden;
+background:#020617;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-header{
-    padding:80px 20px;
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.container{
+text-align:center;
+animation:fade 1.5s;
 }
 
 h1{
-    font-size:55px;
-    margin-bottom:20px;
+font-size:70px;
+text-shadow:0 0 20px cyan;
+margin-bottom:15px;
 }
 
 p{
-    font-size:22px;
-    color:#ddd;
+font-size:22px;
+opacity:.9;
+margin-bottom:40px;
 }
 
 button{
-    margin-top:40px;
-    padding:15px 40px;
-    border:none;
-    border-radius:10px;
-    background:#00c853;
-    color:white;
-    font-size:20px;
-    cursor:pointer;
-    transition:.3s;
+padding:18px 45px;
+font-size:22px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+background:linear-gradient(45deg,#00e5ff,#651fff);
+color:white;
+transition:.3s;
+box-shadow:0 0 20px cyan;
 }
 
 button:hover{
-    transform:scale(1.08);
-    background:#00e676;
+transform:scale(1.15) rotate(-2deg);
+box-shadow:0 0 50px cyan;
 }
 
-section{
-    margin:60px auto;
-    width:90%;
-    max-width:900px;
+#secret{
+margin-top:35px;
+font-size:28px;
+display:none;
+animation:pop .5s;
 }
 
-.card{
-    background:#ffffff15;
-    backdrop-filter:blur(10px);
-    padding:30px;
-    border-radius:20px;
-    margin:20px 0;
+@keyframes pop{
+from{transform:scale(0);}
+to{transform:scale(1);}
 }
 
-footer{
-    margin-top:70px;
-    padding:25px;
-    background:#00000040;
+@keyframes fade{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
+
+.floating{
+position:absolute;
+font-size:35px;
+animation:fly linear infinite;
+user-select:none;
+}
+
+@keyframes fly{
+from{
+transform:translateY(120vh) rotate(0deg);
+}
+to{
+transform:translateY(-120vh) rotate(360deg);
+}
+}
+
 </style>
 
 </head>
 
 <body>
 
-<header>
-    <h1>🚀 به چاتی پاتی خوش امدید</h1>
-    <p>این سایت تنها با HTML و CSS ساخته شده است.</p>
+<canvas id="space"></canvas>
 
-    <button onclick="showMessage()">
-        کلیک کن
-    </button>
-</header>
+<div class="container">
 
-<section>
+<h1>🚀 Galaxy Portal</h1>
 
-<div class="card">
-<h2>درباره سایت</h2>
 <p>
-این صفحه نمونه برای انتشار روی GitHub Pages، Netlify یا هر هاست دیگری مناسب است.
+به دنیای عجیب اینترنت خوش اومدی!
 </p>
-</div>
 
-<div class="card">
-<h2>ویژگی‌ها</h2>
+<button onclick="magic()">
+✨ دکمه مرموز ✨
+</button>
 
-<p>✔ طراحی مدرن</p>
-<p>✔ واکنش‌گرا (Responsive)</p>
-<p>✔ بدون نیاز به کتابخانه</p>
-<p>✔ قابل اجرا روی هر مرورگر</p>
+<div id="secret"></div>
 
 </div>
-
-</section>
-
-<footer>
-ساخته شده با ❤️ توسط امیرعلی
-</footer>
 
 <script>
 
-function showMessage(){
-    alert("تبریک! سایت شما با موفقیت اجرا شد.");
+const canvas=document.getElementById("space");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const stars=[];
+
+for(let i=0;i<250;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+v:Math.random()*2+0.5
+});
+}
+
+function draw(){
+
+ctx.fillStyle="#020617";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+for(let s of stars){
+
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+
+s.y+=s.v;
+
+if(s.y>canvas.height){
+s.y=0;
+s.x=Math.random()*canvas.width;
+}
+
+}
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+const emojis=["🚀","👽","🌍","🛰️","⭐","☄️","🛸","🌙","💫","⚡"];
+
+setInterval(()=>{
+
+let e=document.createElement("div");
+
+e.className="floating";
+e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+
+e.style.left=Math.random()*100+"vw";
+e.style.animationDuration=(4+Math.random()*6)+"s";
+
+document.body.appendChild(e);
+
+setTimeout(()=>e.remove(),10000);
+
+},250);
+
+function magic(){
+
+const msgs=[
+"👾 سلام زمینی!",
+"🚀 پرتاب موفق بود!",
+"🛸 موجودات فضایی تو را دیدند!",
+"⭐ امتیاز مخفی پیدا شد!",
+"🌌 خوش اومدی به کهکشان!",
+"🎉 تو فوق‌العاده‌ای!"
+];
+
+document.getElementById("secret").style.display="block";
+
+document.getElementById("secret").innerHTML=
+msgs[Math.floor(Math.random()*msgs.length)];
+
+document.body.style.background=
+"rgb("+
+Math.random()*255+","+
+Math.random()*255+","+
+Math.random()*255+")";
+
 }
 
 </script>
 
 </body>
 </html>
+```
