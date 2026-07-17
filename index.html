@@ -3,183 +3,1169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جعبه ابزار هوش مصنوعی | ابزارهای رایگان AI</title>
-    <meta name="description" content="مجموعه ابزارهای رایگان هوش مصنوعی - چت بات، تولید محتوا، تحلیل احساسات و خلاصه‌سازی متن">
-    <meta name="title" content="جعبه ابزار هوش مصنوعی رایگان">
-    <meta name="keywords" content="هوش مصنوعی, AI, رایگان, چت بات, تولید محتوا, فارسی">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="جعبه ابزار هوش مصنوعی رایگان">
-    <meta property="og:description" content="مجموعه ابزارهای رایگان هوش مصنوعی به زبان فارسی">
-    <meta property="og:type" content="website">
-    <link rel="stylesheet" href="/index/style.css">
+    <title>داشبورد حرفه‌ای | پنل مدیریت پیشرفته</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --secondary: #0ea5e9;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-dark: #334155;
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+            --radius: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f1f5f9;
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* سایدبار */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+            color: white;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            z-index: 100;
+            transition: var(--transition);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header .logo {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .user-info .name { font-weight: 600; font-size: 14px; }
+        .user-info .role { font-size: 11px; color: #94a3b8; }
+
+        .sidebar-nav { padding: 15px 0; }
+
+        .nav-section {
+            padding: 10px 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border-right: 3px solid transparent;
+            font-size: 14px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: white;
+            border-right-color: #6366f1;
+        }
+
+        .nav-item .icon { font-size: 18px; width: 24px; text-align: center; }
+        .nav-item .badge {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            margin-right: auto;
+        }
+
+        /* محتوای اصلی */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* هدر */
+        .top-header {
+            background: white;
+            padding: 15px 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 25px;
+            padding: 8px 15px;
+            gap: 10px;
+            width: 300px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: #f1f5f9;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .notification-btn:hover { background: #e2e8f0; }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* کارت‌های آمار */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .stat-card.purple::before { background: #8b5cf6; }
+        .stat-card.blue::before { background: #3b82f6; }
+        .stat-card.green::before { background: #10b981; }
+        .stat-card.orange::before { background: #f59e0b; }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-card.purple .stat-icon { background: #ede9fe; color: #7c3aed; }
+        .stat-card.blue .stat-icon { background: #dbeafe; color: #2563eb; }
+        .stat-card.green .stat-icon { background: #d1fae5; color: #059669; }
+        .stat-card.orange .stat-icon { background: #fef3c7; color: #d97706; }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .stat-change.positive { color: #10b981; }
+        .stat-change.negative { color: #ef4444; }
+
+        /* گرید محتوا */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title { font-size: 18px; font-weight: 700; }
+
+        .card-body { padding: 25px; }
+
+        /* جدول */
+        .table-container { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 14px 15px;
+            text-align: right;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--gray);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        tr:hover td { background: #f8fafc; }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-success { background: #d1fae5; color: #065f46; }
+        .status-warning { background: #fef3c7; color: #92400e; }
+        .status-danger { background: #fee2e2; color: #991b1b; }
+        .status-info { background: #dbeafe; color: #1e40af; }
+
+        /* لیست فعالیت‌ها */
+        .activity-list { list-style: none; }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+            align-items: flex-start;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .activity-content .activity-text { font-size: 14px; margin-bottom: 5px; }
+        .activity-content .activity-time { font-size: 11px; color: #94a3b8; }
+
+        /* تب‌ها */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab:hover { color: var(--primary); }
+
+        /* فرم‌ها */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+            font-family: inherit;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #4338ca; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: var(--gray-dark);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* پروگرس بار */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        /* چارت ساده */
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            border-radius: 8px 8px 0 0;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+            min-width: 30px;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.05);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* فوتر */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 13px;
+            margin-top: 30px;
+        }
+
+        /* مودال */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse { animation: pulse 2s infinite; }
+
+        /* واکنش‌گرا */
+        @media (max-width: 1024px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-right: 0; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .top-header { flex-direction: column; }
+            .search-box { width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .tabs { overflow-x: auto; }
+        }
+    </style>
 </head>
 <body>
-    <!-- هدر -->
-    <header>
-        <div class="header-content">
-            <h1>🤖 جعبه ابزار هوش مصنوعی</h1>
-            <p>ابزارهای رایگان و کاربردی با قدرت هوش مصنوعی</p>
+    <!-- سایدبار -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">پنل مدیریت</div>
+            <div class="subtitle">نسخه ۳.۲.۱</div>
         </div>
-    </header>
 
-    <!-- تب‌ها -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('chat')">💬 چت بات</button>
-        <button class="tab-btn" onclick="switchTab('content')">✍️ تولید محتوا</button>
-        <button class="tab-btn" onclick="switchTab('sentiment')">😊 تحلیل احساسات</button>
-        <button class="tab-btn" onclick="switchTab('summary')">📝 خلاصه‌سازی</button>
-    </div>
+        <div class="user-profile">
+            <div class="user-avatar">م</div>
+            <div class="user-info">
+                <div class="name">محمد احمدی</div>
+                <div class="role">مدیر ارشد</div>
+            </div>
+        </div>
 
-    <main class="container">
-        <!-- تب چت بات -->
-        <div id="chat-tab" class="tab-content active">
-            <div class="card">
-                <h2>💬 دستیار هوشمند</h2>
-                <p>سوالت رو بپرس تا کمکت کنم!</p>
-                <div class="chat-box" id="chatBox">
-                    <div class="message bot">
-                        سلام! من دستیار هوش مصنوعی هستم. چطور می‌تونم کمکت کنم؟
+        <nav class="sidebar-nav">
+            <div class="nav-section">اصلی</div>
+            <a class="nav-item active" onclick="switchPage('dashboard')">
+                <span class="icon">📊</span> داشبورد
+                <span class="badge">جدید</span>
+            </a>
+            <a class="nav-item" onclick="switchPage('users')">
+                <span class="icon">👥</span> کاربران
+            </a>
+            <a class="nav-item" onclick="switchPage('products')">
+                <span class="icon">📦</span> محصولات
+            </a>
+            <a class="nav-item" onclick="switchPage('orders')">
+                <span class="icon">🛒</span> سفارشات
+                <span class="badge">۱۲</span>
+            </a>
+
+            <div class="nav-section">ابزارها</div>
+            <a class="nav-item" onclick="switchPage('analytics')">
+                <span class="icon">📈</span> آمار و تحلیل
+            </a>
+            <a class="nav-item" onclick="switchPage('messages')">
+                <span class="icon">💬</span> پیام‌ها
+                <span class="badge">۵</span>
+            </a>
+            <a class="nav-item" onclick="switchPage('settings')">
+                <span class="icon">⚙️</span> تنظیمات
+            </a>
+
+            <div class="nav-section">سایر</div>
+            <a class="nav-item" onclick="switchPage('calendar')">
+                <span class="icon">📅</span> تقویم
+            </a>
+            <a class="nav-item" onclick="switchPage('tasks')">
+                <span class="icon">✅</span> وظایف
+            </a>
+            <a class="nav-item" onclick="switchPage('reports')">
+                <span class="icon">📄</span> گزارشات
+            </a>
+        </nav>
+    </aside>
+
+    <!-- محتوای اصلی -->
+    <main class="main-content" id="mainContent">
+        <!-- هدر -->
+        <header class="top-header">
+            <button class="btn btn-outline" onclick="toggleSidebar()">☰ منو</button>
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="جستجو در همه بخش‌ها..." id="globalSearch">
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn pulse">
+                    🔔
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="notification-btn">🌙</button>
+                <button class="notification-btn">⚡</button>
+            </div>
+        </header>
+
+        <!-- صفحه داشبورد -->
+        <div id="page-dashboard" class="page active">
+            <!-- کارت‌های آمار -->
+            <div class="stats-grid">
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalUsers">۱۲,۸۴۵</div>
+                            <div class="stat-label">کل کاربران</div>
+                        </div>
+                        <div class="stat-icon">👥</div>
+                    </div>
+                    <div class="stat-change positive">↑ ۱۲.۵٪ نسبت به ماه قبل</div>
+                </div>
+
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalSales">₪۲.۴M</div>
+                            <div class="stat-label">فروش کل</div>
+                        </div>
+                        <div class="stat-icon">💰</div>
+                    </div>
+                    <div class="stat-change positive">↑ ۸.۲٪ نسبت به ماه قبل</div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="activeOrders">۱,۲۳۴</div>
+                            <div class="stat-label">سفارشات فعال</div>
+                        </div>
+                        <div class="stat-icon">📦</div>
+                    </div>
+                    <div class="stat-change negative">↓ ۳.۱٪ نسبت به ماه قبل</div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="conversion">۲۴.۸٪</div>
+                            <div class="stat-label">نرخ تبدیل</div>
+                        </div>
+                        <div class="stat-icon">📈</div>
+                    </div>
+                    <div class="stat-change positive">↑ ۵.۷٪ نسبت به ماه قبل</div>
+                </div>
+            </div>
+
+            <!-- نمودار و فعالیت‌ها -->
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📊 آمار فروش هفتگی</span>
+                        <button class="btn btn-outline" onclick="updateChart()">🔄 بروزرسانی</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="chartContainer"></div>
                     </div>
                 </div>
-                <div class="input-group">
-                    <input 
-                        type="text" 
-                        id="chatInput" 
-                        placeholder="پیامت رو بنویس..."
-                        onkeypress="if(event.key==='Enter') chatWithAI()"
-                    >
-                    <button onclick="chatWithAI()" class="btn-primary">
-                        <span>ارسال</span>
-                        <span class="loading hidden" id="chatLoader">⏳</span>
-                    </button>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🕐 فعالیت‌های اخیر</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="activity-list" id="activityList"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جدول کاربران -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">👥 کاربران اخیر</span>
+                    <button class="btn btn-primary" onclick="addUser()">+ افزودن کاربر</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام کاربر</th>
+                                    <th>ایمیل</th>
+                                    <th>تاریخ ثبت‌نام</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- تب تولید محتوا -->
-        <div id="content-tab" class="tab-content">
+        <!-- صفحه کاربران -->
+        <div id="page-users" class="page" style="display:none;">
             <div class="card">
-                <h2>✍️ تولید محتوای خلاقانه</h2>
-                <p>موضوع رو وارد کن تا برات محتوا بنویسم</p>
-                
-                <div class="form-group">
-                    <label>موضوع:</label>
-                    <input type="text" id="contentTopic" placeholder="مثلاً: مزایای ورزش صبحگاهی">
+                <div class="card-header">
+                    <span class="card-title">مدیریت کاربران</span>
+                    <button class="btn btn-primary" onclick="addUser()">+ کاربر جدید</button>
                 </div>
-                
-                <div class="form-group">
-                    <label>نوع محتوا:</label>
-                    <select id="contentType">
-                        <option value="blog">پست وبلاگ</option>
-                        <option value="social">پست شبکه اجتماعی</option>
-                        <option value="email">ایمیل تبلیغاتی</option>
-                        <option value="product">توضیحات محصول</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>لحن:</label>
-                    <select id="contentTone">
-                        <option value="formal">رسمی</option>
-                        <option value="friendly">دوستانه</option>
-                        <option value="humorous">طنز</option>
-                        <option value="professional">حرفه‌ای</option>
-                    </select>
-                </div>
-
-                <button onclick="generateContent()" class="btn-primary">
-                    <span>تولید محتوا</span>
-                    <span class="loading hidden" id="contentLoader">⏳</span>
-                </button>
-
-                <div id="generatedContent" class="result-box hidden">
-                    <h3>محتوای تولید شده:</h3>
-                    <div id="contentResult"></div>
-                    <button onclick="copyContent()" class="btn-secondary">📋 کپی محتوا</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- تب تحلیل احساسات -->
-        <div id="sentiment-tab" class="tab-content">
-            <div class="card">
-                <h2>😊 تحلیل احساسات متن</h2>
-                <p>متن رو وارد کن تا احساساتش رو تحلیل کنم</p>
-                
-                <textarea 
-                    id="sentimentInput" 
-                    placeholder="متن مورد نظرت رو اینجا بنویس... مثلاً: امروز روز فوق‌العاده‌ای بود!"
-                    rows="5"
-                ></textarea>
-                
-                <button onclick="analyzeSentiment()" class="btn-primary">
-                    <span>تحلیل احساسات</span>
-                    <span class="loading hidden" id="sentimentLoader">⏳</span>
-                </button>
-
-                <div id="sentimentResult" class="result-box hidden">
-                    <div class="sentiment-score">
-                        <div class="sentiment-emoji" id="sentimentEmoji">😐</div>
-                        <div class="sentiment-details">
-                            <p><strong>احساس غالب:</strong> <span id="dominantSentiment">-</span></p>
-                            <div class="sentiment-bar">
-                                <div class="bar-positive" id="positiveBar"></div>
-                                <div class="bar-neutral" id="neutralBar"></div>
-                                <div class="bar-negative" id="negativeBar"></div>
-                            </div>
-                            <div class="sentiment-labels">
-                                <span>😊 مثبت: <strong id="positivePercent">0%</strong></span>
-                                <span>😐 خنثی: <strong id="neutralPercent">0%</strong></span>
-                                <span>😢 منفی: <strong id="negativePercent">0%</strong></span>
-                            </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>جستجوی کاربر</label>
+                            <input type="text" placeholder="نام یا ایمیل را وارد کنید..." id="userSearch">
+                        </div>
+                        <div class="form-group">
+                            <label>فیلتر وضعیت</label>
+                            <select id="userFilter">
+                                <option value="all">همه</option>
+                                <option value="active">فعال</option>
+                                <option value="inactive">غیرفعال</option>
+                            </select>
                         </div>
                     </div>
+                    <div class="table-container" style="margin-top:20px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام</th>
+                                    <th>ایمیل</th>
+                                    <th>نقش</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allUsersTable"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- تب خلاصه‌سازی -->
-        <div id="summary-tab" class="tab-content">
+        <!-- صفحه محصولات -->
+        <div id="page-products" class="page" style="display:none;">
             <div class="card">
-                <h2>📝 خلاصه‌سازی هوشمند</h2>
-                <p>متن طولانی رو وارد کن تا برات خلاصه‌اش کنم</p>
-                
-                <textarea 
-                    id="summaryInput" 
-                    placeholder="متن طولانی خود را اینجا وارد کنید..."
-                    rows="8"
-                ></textarea>
-                
-                <div class="form-group">
-                    <label>طول خلاصه:</label>
-                    <select id="summaryLength">
-                        <option value="short">کوتاه (۲-۳ جمله)</option>
-                        <option value="medium" selected>متوسط (۴-۵ جمله)</option>
-                        <option value="long">بلند (۶-۸ جمله)</option>
-                    </select>
+                <div class="card-header">
+                    <span class="card-title">لیست محصولات</span>
+                    <button class="btn btn-success">+ محصول جدید</button>
                 </div>
-
-                <button onclick="summarizeText()" class="btn-primary">
-                    <span>خلاصه کن</span>
-                    <span class="loading hidden" id="summaryLoader">⏳</span>
-                </button>
-
-                <div id="summaryResult" class="result-box hidden">
-                    <h3>خلاصه:</h3>
-                    <div id="summaryText"></div>
-                    <button onclick="copySummary()" class="btn-secondary">📋 کپی خلاصه</button>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>کد</th>
+                                    <th>نام محصول</th>
+                                    <th>دسته‌بندی</th>
+                                    <th>قیمت</th>
+                                    <th>موجودی</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- سایر صفحات -->
+        <div id="page-orders" class="page" style="display:none;"><div class="card"><div class="card-header"><span class="card-title">سفارشات</span></div><div class="card-body"><p>لیست سفارشات اینجاست...</p></div></div></div>
+        <div id="page-analytics" class="page" style="display:none;"><div class="card"><div class="card-header"><span class="card-title">آمار و تحلیل</span></div><div class="card-body"><div class="chart-container" id="analyticsChart"></div></div></div></div>
+        <div id="page-messages" class="page" style="display:none;"><div class="card"><div class="card-header"><span class="card-title">پیام‌ها</span></div><div class="card-body"><div class="activity-list" id="messagesList"></div></div></div></div>
+        <div id="page-settings" class="page" style="display:none;">
+            <div class="card">
+                <div class="card-header"><span class="card-title">تنظیمات</span></div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>نام سایت</label><input type="text" value="پنل مدیریت"></div>
+                        <div class="form-group"><label>ایمیل مدیر</label><input type="email" value="admin@example.com"></div>
+                        <div class="form-group"><label>زبان</label><select><option>فارسی</option><option>English</option></select></div>
+                        <div class="form-group"><label>منطقه زمانی</label><select><option>تهران (UTC+3:30)</option></select></div>
+                        <div class="form-group full"><button class="btn btn-primary">💾 ذخیره تنظیمات</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="page-calendar" class="page" style="display:none;"><div class="card"><div class="card-header"><span class="card-title">تقویم</span></div><div class="card-body"><p>تقویم اینجا نمایش داده میشه...</p></div></div></div>
+        <div id="page-tasks" class="page" style="display:none;">
+            <div class="card">
+                <div class="card-header"><span class="card-title">وظایف</span></div>
+                <div class="card-body">
+                    <div class="progress-label"><span>پیشرفت پروژه</span><span>۷۵٪</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+                    <br>
+                    <div class="progress-label"><span>تسک‌های انجام شده</span><span>۴۵/۶۰</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:75%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+                </div>
+            </div>
+        </div>
+        <div id="page-reports" class="page" style="display:none;"><div class="card"><div class="card-header"><span class="card-title">گزارشات</span></div><div class="card-body"><p>گزارشات اینجا...</p></div></div></div>
+
+        <!-- فوتر -->
+        <div class="footer">
+            <p>© ۱۴۰۳ داشبورد مدیریت - ساخته شده با ❤️ | نسخه ۳.۲.۱</p>
         </div>
     </main>
 
-    <!-- فوتر -->
-    <footer>
-        <p>🚀 ساخته شده با ❤️ و هوش مصنوعی | تمام ابزارها رایگان و متن‌باز</p>
-        <a href="https://github.com/flip-flop-86/index" target="_blank">مشاهده در گیت‌هاب</a>
-    </footer>
+    <!-- مودال -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent"></div>
+    </div>
 
-     <script src="/index/config.js"></script>
-     <script src="/index/script.js"></script>
+    <script>
+        // داده‌های نمونه
+        const users = [
+            { id: 1, name: 'علی محمدی', email: 'ali@example.com', date: '۱۴۰۲/۱۲/۱۵', status: 'active', role: 'مدیر' },
+            { id: 2, name: 'زهرا حسینی', email: 'zahra@example.com', date: '۱۴۰۲/۱۱/۲۰', status: 'active', role: 'کاربر' },
+            { id: 3, name: 'محمد رضایی', email: 'mohammad@example.com', date: '۱۴۰۲/۱۰/۰۵', status: 'inactive', role: 'کاربر' },
+            { id: 4, name: 'فاطمه موسوی', email: 'fatemeh@example.com', date: '۱۴۰۲/۰۹/۱۸', status: 'active', role: 'نویسنده' },
+            { id: 5, name: 'حسین کریمی', email: 'hossein@example.com', date: '۱۴۰۲/۰۸/۲۲', status: 'active', role: 'کاربر' },
+        ];
+
+        const products = [
+            { code: 'PRD-001', name: 'لپتاپ ایسوس', category: 'الکترونیک', price: '۲۵,۰۰۰,۰۰۰', stock: 45, status: 'active' },
+            { code: 'PRD-002', name: 'گوشی سامسونگ', category: 'الکترونیک', price: '۱۵,۰۰۰,۰۰۰', stock: 120, status: 'active' },
+            { code: 'PRD-003', name: 'میز اداری', category: 'مبلمان', price: '۸,۵۰۰,۰۰۰', stock: 8, status: 'warning' },
+            { code: 'PRD-004', name: 'صندلی گیمینگ', category: 'مبلمان', price: '۱۲,۰۰۰,۰۰۰', stock: 0, status: 'inactive' },
+            { code: 'PRD-005', name: 'هدفون بیسیم', category: 'الکترونیک', price: '۳,۵۰۰,۰۰۰', stock: 230, status: 'active' },
+        ];
+
+        const activities = [
+            { text: 'علی محمدی یک سفارش جدید ثبت کرد', time: '۵ دقیقه پیش', icon: '🛒', color: '#dbeafe' },
+            { text: 'زهرا حسینی حساب خود را ارتقا داد', time: '۱۵ دقیقه پیش', icon: '⬆️', color: '#d1fae5' },
+            { text: 'سیستم بکاپ خودکار انجام شد', time: '۱ ساعت پیش', icon: '💾', color: '#ede9fe' },
+            { text: '۵ محصول جدید اضافه شد', time: '۳ ساعت پیش', icon: '📦', color: '#fef3c7' },
+            { text: 'گزارش ماهانه آماده شد', time: '۵ ساعت پیش', icon: '📄', color: '#fee2e2' },
+        ];
+
+        // تابع سوییچ صفحات
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            const page = document.getElementById(`page-${pageName}`);
+            if (page) page.style.display = 'block';
+            
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (pageName === 'analytics') renderAnalyticsChart();
+            if (pageName === 'messages') renderMessages();
+        }
+
+        // رندر جدول کاربران
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTable');
+            if (!tbody) return;
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.id}</td>
+                    <td><strong>${u.name}</strong></td>
+                    <td>${u.email}</td>
+                    <td>${u.date}</td>
+                    <td><span class="status-badge status-${u.status === 'active' ? 'success' : 'danger'}">${u.status === 'active' ? 'فعال' : 'غیرفعال'}</span></td>
+                    <td>
+                        <button class="btn btn-outline" style="padding:4px 8px;font-size:11px;" onclick="editUser(${u.id})">✏️</button>
+                        <button class="btn btn-danger" style="padding:4px 8px;font-size:11px;" onclick="deleteUser(${u.id})">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAllUsersTable() {
+            const tbody = document.getElementById('allUsersTable');
+            if (!tbody) return;
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td>${u.role}</td>
+                    <td><span class="status-badge status-${u.status === 'active' ? 'success' : 'danger'}">${u.status === 'active' ? 'فعال' : 'غیرفعال'}</span></td>
+                    <td><button class="btn btn-outline" style="padding:4px 8px;font-size:11px;">ویرایش</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderProductsTable() {
+            const tbody = document.getElementById('productsTable');
+            if (!tbody) return;
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td>${p.code}</td>
+                    <td>${p.name}</td>
+                    <td>${p.category}</td>
+                    <td>${p.price} تومان</td>
+                    <td>${p.stock}</td>
+                    <td><span class="status-badge status-${p.status === 'active' ? 'success' : p.status === 'warning' ? 'warning' : 'danger'}">${p.status === 'active' ? 'موجود' : p.status === 'warning' ? 'کم' : 'ناموجود'}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // رندر چارت
+        function renderChart() {
+            const container = document.getElementById('chartContainer');
+            if (!container) return;
+            const data = [65, 45, 80, 55, 70, 90, 50];
+            const days = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
+            container.innerHTML = data.map((v, i) => `
+                <div class="chart-bar" style="height:${v}%;" title="${days[i]}: ${v} میلیون">
+                    <div class="chart-value">${v}M</div>
+                    <div class="chart-label">${days[i]}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderAnalyticsChart() {
+            const container = document.getElementById('analyticsChart');
+            if (!container) return;
+            const data = [30, 45, 55, 40, 70, 60, 85, 75, 90, 80, 95, 100];
+            const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+            container.innerHTML = data.map((v, i) => `
+                <div class="chart-bar" style="height:${v}%;" title="${months[i]}: ${v}٪">
+                    <div class="chart-value">${v}%</div>
+                    <div class="chart-label">${months[i]}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateChart() { renderChart(); alert('✅ نمودار بروزرسانی شد!'); }
+
+        // رندر فعالیت‌ها
+        function renderActivities() {
+            const list = document.getElementById('activityList');
+            if (!list) return;
+            list.innerHTML = activities.map(a => `
+                <li class="activity-item">
+                    <div class="activity-icon" style="background:${a.color}">${a.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-text">${a.text}</div>
+                        <div class="activity-time">${a.time}</div>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderMessages() {
+            const list = document.getElementById('messagesList');
+            if (!list) return;
+            const messages = [
+                { text: 'پیام از طرف مدیر سیستم', time: '۲ ساعت پیش', icon: '📧', color: '#dbeafe' },
+                { text: 'اعلان بروزرسانی سیستم', time: 'دیروز', icon: '🔔', color: '#fef3c7' },
+            ];
+            list.innerHTML = messages.map(m => `
+                <div class="activity-item">
+                    <div class="activity-icon" style="background:${m.color}">${m.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-text">${m.text}</div>
+                        <div class="activity-time">${m.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // عملیات کاربران
+        function addUser() {
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('modalContent').innerHTML = `
+                <h3 style="margin-bottom:20px;">➕ افزودن کاربر جدید</h3>
+                <div class="form-group"><label>نام</label><input type="text" id="newUserName"></div>
+                <div class="form-group"><label>ایمیل</label><input type="email" id="newUserEmail"></div>
+                <div class="form-group"><label>نقش</label><select id="newUserRole"><option>کاربر</option><option>مدیر</option><option>نویسنده</option></select></div>
+                <div style="display:flex;gap:10px;margin-top:20px;">
+                    <button class="btn btn-primary" onclick="saveNewUser()">ذخیره</button>
+                    <button class="btn btn-outline" onclick="closeModal()">انصراف</button>
+                </div>
+            `;
+        }
+
+        function saveNewUser() {
+            const name = document.getElementById('newUserName').value;
+            const email = document.getElementById('newUserEmail').value;
+            const role = document.getElementById('newUserRole').value;
+            if (!name || !email) { alert('لطفاً فیلدها را پر کنید!'); return; }
+            users.push({ id: users.length + 1, name, email, date: new Date().toLocaleDateString('fa-IR'), status: 'active', role });
+            renderUsersTable();
+            renderAllUsersTable();
+            closeModal();
+            alert('✅ کاربر با موفقیت اضافه شد!');
+        }
+
+        function editUser(id) {
+            const user = users.find(u => u.id === id);
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('modalContent').innerHTML = `
+                <h3 style="margin-bottom:20px;">✏️ ویرایش کاربر</h3>
+                <div class="form-group"><label>نام</label><input type="text" id="editUserName" value="${user.name}"></div>
+                <div class="form-group"><label>ایمیل</label><input type="email" id="editUserEmail" value="${user.email}"></div>
+                <div style="display:flex;gap:10px;margin-top:20px;">
+                    <button class="btn btn-primary" onclick="saveEditUser(${id})">ذخیره</button>
+                    <button class="btn btn-outline" onclick="closeModal()">انصراف</button>
+                </div>
+            `;
+        }
+
+        function saveEditUser(id) {
+            const user = users.find(u => u.id === id);
+            user.name = document.getElementById('editUserName').value;
+            user.email = document.getElementById('editUserEmail').value;
+            renderUsersTable();
+            renderAllUsersTable();
+            closeModal();
+            alert('✅ کاربر ویرایش شد!');
+        }
+
+        function deleteUser(id) {
+            if (confirm('آیا از حذف این کاربر مطمئن هستید؟')) {
+                const index = users.findIndex(u => u.id === id);
+                users.splice(index, 1);
+                renderUsersTable();
+                renderAllUsersTable();
+                alert('🗑️ کاربر حذف شد!');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // جستجو
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const filtered = users.filter(u => u.name.includes(query) || u.email.includes(query));
+            const tbody = document.getElementById('usersTable');
+            if (tbody) {
+                tbody.innerHTML = filtered.map(u => `
+                    <tr>
+                        <td>${u.id}</td>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
+                        <td>${u.date}</td>
+                        <td><span class="status-badge status-${u.status === 'active' ? 'success' : 'danger'}">${u.status === 'active' ? 'فعال' : 'غیرفعال'}</span></td>
+                        <td><button class="btn btn-outline" style="padding:4px 8px;font-size:11px;">✏️</button></td>
+                    </tr>
+                `).join('');
+            }
+        });
+
+        // سایدبار
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // مقداردهی اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            renderUsersTable();
+            renderAllUsersTable();
+            renderProductsTable();
+            renderChart();
+            renderActivities();
+            console.log('🚀 داشبورد مدیریت با موفقیت بارگذاری شد!');
+            console.log('📊 ' + users.length + ' کاربر ثبت شده');
+            console.log('📦 ' + products.length + ' محصول در انبار');
+        });
+
+        // آپدیت خودکار اعداد
+        setInterval(() => {
+            const usersEl = document.getElementById('totalUsers');
+            const salesEl = document.getElementById('totalSales');
+            if (usersEl) {
+                const count = parseInt(usersEl.textContent.replace(/,/g, ''));
+                usersEl.textContent = (count + Math.floor(Math.random() * 3)).toLocaleString();
+            }
+            if (salesEl) {
+                const sales = 2.4 + Math.random() * 0.1;
+                salesEl.textContent = '₪' + sales.toFixed(1) + 'M';
+            }
+        }, 5000);
+    </script>
 </body>
 </html>
